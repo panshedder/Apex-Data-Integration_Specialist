@@ -1,12 +1,23 @@
 global class ProjectCalloutService {
     //Complete the implementation for business and callout logic
 	@InvocableMethod(Label='Post Opportunity To PMS')
-    global static void postOpportunityToPMS(List<Opportunity> opp){
+    global static void postOpportunityToPMS(Id opportunityId, String opportunityName, String accountName, Date closeDate, Integer amount){
+        JSONGenerator genBody = JSON.createGenerator(true);
+        genBody.writeStartObject();
+            genBody.writeStringField(opportunityId, opportunityId);
+            genBody.writeStringField(opportunityName, opportunityName);
+            genBody.writeStringField(accountName, accountName);
+            genBody.writeDateField(closeDate, closeDate);
+            genBody.writeNumberField(amount, amout);
+        genBody.writeEndObject();
+
+        String stringBody = genBody.getAsString();
+
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:ProjectService');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-        request.setBody('{"opportunityId": opp.Id, "opportunityName": opp.Name, "accountName": opp.AccountId.Name, "closeDate": opp.CloseDate, "amount":  opp.Amount}');
+        request.setBody(stringBody);
         
         Http http = new Http();
         HttpResponse response = http.send(request);
