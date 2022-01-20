@@ -30,6 +30,10 @@ public class ProjectCalloutServiceTest {
     Test.startTest();
       ProjectCalloutService.postOpportunityToPMS(oppId);
     Test.stopTest();
+
+    Opportunity oppTest = [SELECT Id, StageName FROM Opportunity WHERE Name = 'Test Opportunity'];
+
+    System.assertEquals('Submitted Project', oppTest.StageName);
   }
 
   @isTest
@@ -44,5 +48,9 @@ public class ProjectCalloutServiceTest {
     Test.startTest();
       ProjectCalloutService.postOpportunityToPMS(oppId);
     Test.stopTest();
+
+    Opportunity oppTest = [SELECT Id, StageName FROM Opportunity WHERE Name = 'Test Opportunity'];
+
+    System.assertEquals('Resubmit Project', oppTest.StageName);
   }
 }
