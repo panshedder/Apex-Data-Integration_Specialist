@@ -8,6 +8,7 @@ global class BillingCalloutService {
                 BillingServiceProxy.project project = new BillingServiceProxy.project();
                 project.username = ServiceCredentials__c.getAll().values().Username__c;
                 project.password = ServiceCredentials__c.getAll().values().Password__c;
+                project.projectid = projectRef;
                 project.billAmount = billAmount;
 
                 BillingServiceProxy.InvoicesPortSoap11 syncBilling = new BillingServiceProxy.InvoicesPortSoap11();
