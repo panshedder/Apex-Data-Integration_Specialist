@@ -1,4 +1,4 @@
-global class BillingCalloutService {
+global without sharing class BillingCalloutService {
     //Implement business and callout logic methods here
     @Future(callout = true)
     global static void callBillingService(String status, String projectRef, Decimal billAmount) {
