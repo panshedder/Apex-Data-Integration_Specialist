@@ -10,13 +10,12 @@ global without sharing class BillingCalloutService {
                 project.password = ServiceCredentials__c.getAll().values().Password__c;
                 project.projectid = projectRef;
                 project.billAmount = billAmount;
-
+                
                 BillingServiceProxy.InvoicesPortSoap11 syncBilling = new BillingServiceProxy.InvoicesPortSoap11();
                 String resp = syncBilling.billProject(project);
-
                 if(resp == 'OK') {
-                    Project__c projectUpd = [SELECT Id, Status__c, ProjectRef__c FROM Project__c WHERE ProjectRef__c =: projectRef];
-                    projectUpd.Status__c = 'Billed';
+                    List<Project__c> projectUpd = [SELECT Id, Status__c, ProjectRef__c FROM Project__c WHERE ProjectRef__c =: projectRef];
+                    projectUpd[0].Status__c = 'Billed';
                     update projectUpd;
                 }
             } catch (Exception e) {
